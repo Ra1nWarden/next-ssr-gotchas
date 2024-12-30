@@ -2,11 +2,16 @@
 import React from 'react';
 
 function Counter() {
-  const [count, setCount] = React.useState(() => {
-    return Number(
-      window.localStorage.getItem('saved-count') || 0
-    );
-  });
+  const [count, setCount] = React.useState(0);
+  
+  React.useEffect(() => {
+
+    const saved = window.localStorage.getItem('saved-count');
+    if (saved === null) {
+      return;
+    }
+    setCount(Number(saved));
+  }, [])
 
   React.useEffect(() => {
     window.localStorage.setItem('saved-count', count);
